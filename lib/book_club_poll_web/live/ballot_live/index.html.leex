@@ -1,0 +1,37 @@
+<h1>Listing Ballots</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, BookClubPollWeb.BallotLive.FormComponent,
+    id: @ballot.id || :new,
+    title: @page_title,
+    action: @live_action,
+    ballot: @ballot,
+    return_to: Routes.ballot_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Other notes</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="ballots">
+    <%= for ballot <- @ballots do %>
+      <tr id="ballot-<%= ballot.id %>">
+        <td><%= ballot.name %></td>
+        <td><%= ballot.other_notes %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.ballot_show_path(@socket, :show, ballot) %></span>
+          <span><%= live_patch "Edit", to: Routes.ballot_index_path(@socket, :edit, ballot) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: ballot.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Ballot", to: Routes.ballot_index_path(@socket, :new) %></span>

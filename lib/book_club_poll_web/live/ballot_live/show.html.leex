@@ -1,0 +1,27 @@
+<h1>Show Ballot</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, BookClubPollWeb.BallotLive.FormComponent,
+    id: @ballot.id,
+    title: @page_title,
+    action: @live_action,
+    ballot: @ballot,
+    return_to: Routes.ballot_show_path(@socket, :show, @ballot) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @ballot.name %>
+  </li>
+
+  <li>
+    <strong>Other notes:</strong>
+    <%= @ballot.other_notes %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.ballot_show_path(@socket, :edit, @ballot), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.ballot_index_path(@socket, :index) %></span>
