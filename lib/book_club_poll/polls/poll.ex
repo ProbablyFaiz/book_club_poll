@@ -18,6 +18,7 @@ defmodule BookClubPoll.Polls.Poll do
   def changeset(poll, attrs) do
     poll
     |> cast(attrs, [:name, :description, :num_ranks, :end_date])
-    |> validate_required([:name])
+    |> cast_assoc(:poll_book_options)
+    |> validate_required([:name, :num_ranks])
   end
 end
