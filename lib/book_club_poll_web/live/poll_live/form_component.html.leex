@@ -14,6 +14,10 @@
   <%= textarea f, :description %>
   <%= error_tag f, :description %>
 
+  <%= label f, :number_to_rank %>
+  <%= number_input f, :num_ranks %>
+  <%= error_tag f, :num_ranks %>
+
   <%= label f, :end_date %>
   <%= date_select f, :end_date %>
   <%= error_tag f, :end_date %>

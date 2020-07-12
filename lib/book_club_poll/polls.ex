@@ -7,6 +7,7 @@ defmodule BookClubPoll.Polls do
   alias BookClubPoll.Repo
 
   alias BookClubPoll.Polls.Poll
+  alias BookClubPoll.PollBookOption.PollBookOption
 
   @doc """
   Returns the list of polls.
@@ -35,7 +36,10 @@ defmodule BookClubPoll.Polls do
       ** (Ecto.NoResultsError)
 
   """
-  def get_poll!(id), do: Repo.get!(Poll, id)
+  def get_poll!(id) do
+    Repo.get!(Poll, id)
+    |> Repo.preload(poll_book_options: from(b in PollBookOption, order_by: b.inserted_at))
+  end
 
   @doc """
   Creates a poll.
